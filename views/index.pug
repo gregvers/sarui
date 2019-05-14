@@ -1,0 +1,13 @@
+extends layout
+block content
+    form(method='POST' action='/' enctype="multipart/form-data")
+        div.input
+            input(type='file', name='upload')
+            button(type='submit', name='submit') Upload
+            p SAR file loaded: #{sarfilename}
+        div.input
+            input(type="button",value="Config",onclick="update('config')")
+            input(type="button",value="BOM",onclick="update('bom')")
+            input(type="button",value="Diff",onclick="update('diff')")
+    p
+    #content!= output

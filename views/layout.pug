@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script.
+        function update(sarcommand){
+            var req = new XMLHttpRequest();
+            req.open("GET","/" + sarcommand);
+            req.onreadystatechange = function(){
+                if(req.readyState == 4){
+                    console.log('response=' + req.response);
+                    if (sarcommand == 'config') {
+                        document.getElementById("content").innerHTML = "<pre>" + JSON.stringify(JSON.parse(req.responseText),null,2) + "</pre>";
+                    } else if ((sarcommand == 'bom') || (sarcommand == 'diff')) {
+                        document.getElementById("content").innerHTML = req.responseText.replace(/\r\n|\r|\n/g, '<br>').replace(/\s/g, '&nbsp');
+                    }
+                }
+            }
+            req.send();
+        }
+  body
+    h1= title
+    block content
+    block output
